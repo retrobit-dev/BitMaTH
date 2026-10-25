@@ -9,8 +9,9 @@ type SplashScreenProps = {
 }
 
 /**
- * Splash: sebuah laci kayu di atas meja kerja guru.
- * Papan atas menjorok, sisi bertebal, alas berkaki, bayangan arsir di meja.
+ * Splash: unit laci satu laras (hanya laci atas), digambar flat-vector
+ * seperti referensi — papan atas berperspektif, dinding samping gelap,
+ * kilau diagonal, handle berbayang keras, plinth bergaris, bayangan tanah.
  */
 export function SplashScreen({ clock, isOpen, onOpenDrawer }: SplashScreenProps) {
   return (
@@ -19,32 +20,25 @@ export function SplashScreen({ clock, isOpen, onOpenDrawer }: SplashScreenProps)
 
       <div className="scene__content">
         <header className="brand">
-          <div className="brand__mark" aria-hidden="true">
-            √
-          </div>
           <h1 className="brand__name">
             Bit<span>MaTH</span>
           </h1>
           <p className="brand__tag">Laci pintar guru matematika</p>
         </header>
 
-        <div className={`cabinet${isOpen ? ' is-open' : ''}`}>
-          <span className="cabinet__top" aria-hidden="true" />
-          <span className="cabinet__side" aria-hidden="true" />
+        <div className={`unit${isOpen ? ' is-open' : ''}`}>
+          <span className="unit__cap" aria-hidden="true" />
 
-          <div className="cabinet__body">
-            <span className="knot knot--a" aria-hidden="true" />
-            <span className="knot knot--b" aria-hidden="true" />
+          <div className="unit__body">
+            <div className="face">
+              <span className="face__sheen" aria-hidden="true" />
+              <span className="face__sheen face__sheen--low" aria-hidden="true" />
+              <span className="face__frame" aria-hidden="true" />
 
-            <div className="drawer-front">
-              <div className="plate">
-                <span className="plate__name">Laci Pintar</span>
-                <span className="plate__no">No. 01</span>
-              </div>
-
-              <PaperScreen clock={clock} isOpen={isOpen} />
+              <span className="face__tab">Laci 01 · E-Paper</span>
 
               <div className="handle-wrap">
+                <span className="handle-shadow" aria-hidden="true" />
                 <button
                   type="button"
                   className="pull"
@@ -58,22 +52,17 @@ export function SplashScreen({ clock, isOpen, onOpenDrawer }: SplashScreenProps)
                   </span>
                   <span className="pull__grip" aria-hidden="true" />
                 </button>
-
-                <span className="tag" aria-hidden="true">
-                  T.A. {clock.schoolYear}
-                </span>
               </div>
+
+              <PaperScreen clock={clock} isOpen={isOpen} />
 
               <p className="drawer-hint">{clock.greeting} · tarik handle untuk membuka</p>
             </div>
           </div>
 
-          <div className="cabinet__base" aria-hidden="true" />
-          <div className="cabinet__legs" aria-hidden="true">
-            <i />
-            <i />
-          </div>
-          <div className="cabinet__shadow" aria-hidden="true" />
+          <div className="unit__under" aria-hidden="true" />
+          <div className="unit__plinth" aria-hidden="true" />
+          <div className="unit__shadow" aria-hidden="true" />
         </div>
 
         <footer className="scene__footer">

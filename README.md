@@ -2,7 +2,7 @@
 
 Asisten laci pintar untuk guru matematika. Web app (full stack) yang nantinya dibungkus menjadi APK Android.
 
-> Status: **Tahap 1 — Splash laci kayu + form login (UI), tema e-paper Spectra.**
+> Status: **Tahap 1 — Splash unit laci + form login (UI), tema e-paper Spectra.**
 > Autentikasi masih lokal (akun demo), backend menyusul.
 
 ## Menjalankan
@@ -18,43 +18,44 @@ Akun demo tahap 1: `guru@bitmath.id` / `bitmath123`
 
 ## Konsep
 
-Metafora utama: **laci meja guru** — digambar sebagai benda, bukan kartu UI.
-Splash adalah potret meja kerja: laci kayu berkaki di atas kertas berpetak,
-dengan bayangan arsir, simpul kayu, pelat kuningan, dan handle logam.
+Splash adalah **satu unit laci di atas meja kerja**, digambar gaya flat-vector
+seperti referensi: tanpa outline, kedalaman dibangun dari bidang tonal.
+Hanya **laci atas** yang dipakai — satu laci, satu handle, satu label.
 
 ### Bahasa visual: e-paper Spectra 6
 
 | Aspek | Aturan |
 | --- | --- |
-| Warna | 6 pigmen Spectra: hitam `#201e1a`, kertas `#efe8d6`, merah `#b23a2f`, kuning (kayu) `#e2a92b`, biru `#2b4a80`, hijau `#3d6b4e` |
-| Cahaya | tanpa glow, tanpa blur, tanpa gradien lembut — kedalaman dari garis tinta & bayangan keras |
-| Tekstur | butiran kertas, serat kayu (garis rapat), arsir titik (dither), vignette titik di sudut |
-| Bentuk | sudut nyaris siku (0–1px), garis ganda, garis putus-titik |
-| Tipografi | Newsreader (serif cetak, huruf kapital berjarak) + Space Mono (label teknis) |
+| Warna | 6 pigmen Spectra: hitam `#201e1a`, kertas `#efe8d6`, merah `#b23a2f`, kuning `#e2a92b`, biru `#2b4a80`, hijau `#3d6b4e` |
+| Kertas kraft | turunan pigmen kuning + putih: `#f0e7d3` → `#e2d3b2` → `#cbb995` → `#a8926c` |
+| Cahaya | tanpa glow, tanpa blur; kilau = pita diagonal datar, bayangan = blok keras / arsir titik |
+| Tekstur | butiran kertas di seluruh layar, vignette arsir titik di sudut, kertas berpetak |
+| Tipografi | Newsreader (serif cetak, kapital berjarak) + Space Mono (label teknis) |
 
-### Bagian laci
+### Konstruksi unit
 
-- **Papan atas** menjorok ke kiri-kanan, **sisi kanan** bertebal dengan pola titik,
-  **alas + dua kaki**, dan **bayangan arsir** di permukaan meja.
-- **Muka laci** punya celah gelap di atasnya, serat kayu, dua simpul kayu,
-  pelat kuningan "LACI PINTAR · No. 01" yang dipasang miring.
-- **Label e-paper** — tanggal hari ini, jam berjalan dengan detik di kotak kuning,
-  tahun ajaran & semester. Saat laci dibuka, label "refresh" seperti panel asli.
-- **Handle** — bar bertekstur logam dengan dua sekrup, kartu gantung kecil
-  bertuliskan tahun ajaran. Ditekan: handle turun, muka laci ikut turun 5px,
-  lalu formulir naik dari bawah sebagai **baki laci berisi kertas**.
-- **Formulir** — bernomor (01 email/NIP, 02 sandi), label mono, stempel
-  "TERVERIFIKASI" saat berhasil.
+- **Papan atas** — permukaan berperspektif tipis (trapesium lebih terang) di atas
+  tebal papan, menjorok melewati badan.
+- **Badan** — dinding samping kiri-kanan lebih gelap; celah gelap di atas muka laci.
+- **Muka laci** — bidang kertas dengan **kilau diagonal** (dua pita), garis rangka
+  dalam, dan tab merah "LACI 01 · E-PAPER".
+- **Handle** — bar putih dengan **bayangan kraft menyudut** di bawah-kanannya;
+  ditekan berarti handle turun menempel bayangan, muka laci ikut turun 6px.
+- **Label e-paper** — tercetak di muka laci: tanggal hari ini, jam berjalan
+  (detik di kotak kuning), status laci, tahun ajaran & semester.
+- **Plinth** — alas gelap + papan bawah bergaris, ditutup **bayangan tanah** berarsir titik.
+- **Formulir** — setelah handle ditarik, baki laci kraft naik dari bawah berisi
+  kertas formulir (01 email/NIP, 02 sandi); sukses = stempel "TERVERIFIKASI".
 
 ## Struktur
 
 ```
 src/
 ├── App.tsx                  # tanda potong cetak + komposisi splash/sheet
-├── index.css                # design system e-paper (palet, serat kayu, arsir)
+├── index.css                # design system e-paper (palet Spectra, kraft, arsir)
 ├── hooks/useClock.ts        # jam live, tanggal Indonesia, tahun ajaran
 └── components/
-    ├── SplashScreen.tsx     # potret laci kayu: papan atas, muka laci, handle
+    ├── SplashScreen.tsx     # unit satu laci: papan atas, muka laci, handle
     ├── PaperScreen.tsx      # label e-paper di muka laci: tanggal & jam
     ├── AuthSheet.tsx        # login sheet (form + status sukses)
     ├── FormulaBackdrop.tsx  # latar rumus samar
@@ -72,7 +73,7 @@ src/
 
 ## Roadmap
 
-1. **Tahap 1 (selesai)** — splash laci kayu bertema e-paper Spectra, label tanggal/jam, form login UI.
+1. **Tahap 1 (selesai)** — splash unit laci (flat-vector) bertema e-paper Spectra, label tanggal/jam, form login UI.
 2. **Tahap 2** — backend auth nyata (sesi/JWT), dashboard guru.
 3. **Tahap 3** — modul inti: bank soal, perangkat pembelajaran (RPP/ATP),
    presensi, penilaian.

@@ -7,10 +7,13 @@
 }
 
 /* ==========================================================================
-   BitMaTH — "laci kayu" dalam bahasa cetak e-paper Spectra 6
-   6 pigmen: hitam tinta, kertas, merah, kuning (kayu), biru, hijau.
-   Tanpa gradien cahaya, tanpa blur. Kedalaman dibangun dari garis tinta,
-   arsir (hatching), pola titik (dither), dan bayangan keras.
+   BitMaTH — unit laci satu laras (hanya laci atas), bahasa cetak e-paper.
+
+   Geometri mengikuti referensi flat-vector: papan atas berperspektif tipis,
+   dinding samping lebih gelap, muka laci dengan kilau diagonal, handle putih
+   berbayang keras, plinth bergaris, bayangan tanah.
+   Palet: 6 pigmen Spectra + turunan "kertas kraft" (tint kuning/putih).
+   Tanpa gradien cahaya, tanpa blur.
    ========================================================================== */
 
 :root {
@@ -28,13 +31,12 @@
   --blue: #2b4a80;
   --green: #3d6b4e;
 
-  /* kayu = tint pigmen kuning, dibangun ulang dengan pola titik & arsir tinta */
-  --wood: #e2a92b;
-  --wood-2: #cd951f;
-  --wood-3: #b07b16;
-  --wood-4: #8a5d0e;
-
-  --line: 1.5px solid var(--ink);
+  /* turunan kertas kraft dari pigmen kuning + putih */
+  --kraft-0: #f0e7d3;
+  --kraft-1: #e2d3b2;
+  --kraft-2: #cbb995;
+  --kraft-3: #a8926c;
+  --kraft-4: #8a7350;
 
   --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='0.55'/></svg>");
 
@@ -93,7 +95,7 @@ button {
   position: absolute;
   width: 14px;
   height: 14px;
-  border: 0 solid rgba(32, 30, 26, 0.32);
+  border: 0 solid rgba(32, 30, 26, 0.3);
 }
 
 .crop--tl {
@@ -134,12 +136,12 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(14px, 2.4vh, 22px);
-  padding: clamp(18px, 3vh, 34px) 14px calc(clamp(16px, 2.6vh, 26px) + env(safe-area-inset-bottom));
+  gap: clamp(12px, 2.2vh, 20px);
+  padding: clamp(16px, 2.8vh, 32px) 14px calc(clamp(14px, 2.4vh, 24px) + env(safe-area-inset-bottom));
   overflow: hidden;
 }
 
-/* permukaan meja: kertas berpetak + arsir sudut */
+/* permukaan meja: kertas berpetak */
 .scene::before {
   content: "";
   position: absolute;
@@ -154,7 +156,7 @@ button {
   background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px;
 }
 
-/* vignette arsir: sudut digelapkan dengan pola titik, bukan gradien cahaya */
+/* vignette arsir titik di sudut */
 .scene::after {
   content: "";
   position: absolute;
@@ -162,9 +164,9 @@ button {
   z-index: -1;
   background-image: radial-gradient(var(--ink) 1px, transparent 1.1px);
   background-size: 4px 4px;
-  opacity: 0.12;
-  mask-image: radial-gradient(64% 56% at 50% 46%, transparent 42%, #000 100%);
-  -webkit-mask-image: radial-gradient(64% 56% at 50% 46%, transparent 42%, #000 100%);
+  opacity: 0.1;
+  mask-image: radial-gradient(62% 54% at 50% 46%, transparent 45%, #000 100%);
+  -webkit-mask-image: radial-gradient(62% 54% at 50% 46%, transparent 45%, #000 100%);
   pointer-events: none;
 }
 
@@ -180,7 +182,7 @@ button {
   position: absolute;
   font-family: var(--font-display);
   font-style: italic;
-  color: rgba(32, 30, 26, 0.14);
+  color: rgba(32, 30, 26, 0.13);
   white-space: nowrap;
   animation: drift 24s steps(5, end) infinite alternate;
 }
@@ -198,51 +200,35 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(12px, 2vh, 20px);
+  gap: clamp(10px, 1.8vh, 18px);
   width: 100%;
-  transition: transform 0.36s steps(4, end);
+  transition: transform 0.32s steps(4, end);
 }
 
 .scene.is-open .scene__content {
-  transform: translateY(-1vh) scale(0.99);
+  transform: translateY(-0.8vh) scale(0.99);
 }
 
-/* ================================================================== kop surat */
+/* ================================================================== kop */
 
 .brand {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   text-align: center;
-}
-
-.brand__mark {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  margin-bottom: 2px;
-  border: var(--line);
-  background: var(--ink);
-  color: var(--paper-hi);
-  font-family: var(--font-mono);
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1;
 }
 
 .brand__name {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.32rem, 5.8vw, 1.6rem);
+  font-size: clamp(1.15rem, 5vw, 1.4rem);
   font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  text-indent: 0.24em;
+  text-indent: 0.26em;
   color: var(--ink);
-  text-shadow: 0 1px 0 rgba(249, 244, 231, 0.9);
 }
 
 .brand__name span {
@@ -255,7 +241,7 @@ button {
   gap: 8px;
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 7.5px;
+  font-size: 7px;
   font-weight: 700;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -265,184 +251,143 @@ button {
 .brand__tag::before,
 .brand__tag::after {
   content: "";
-  width: 22px;
+  width: 20px;
   height: 1px;
   background: var(--ink-3);
 }
 
-/* ================================================================== kabinet */
+/* ============================================================ unit laci */
 
-.cabinet {
+.unit {
   position: relative;
-  width: min(384px, 100%);
-  padding-top: 13px; /* ruang papan atas */
+  width: min(312px, 86%);
 }
 
-/* papan atas menjorok ke kiri-kanan */
-.cabinet__top {
-  position: absolute;
-  inset: 0 -11px auto -11px;
-  height: 15px;
-  border: var(--line);
-  border-radius: 1px;
-  background-color: var(--wood-2);
-  background-image:
-    repeating-linear-gradient(90.5deg, rgba(122, 82, 11, 0.26) 0 1px, transparent 1px 9px),
-    repeating-linear-gradient(89deg, rgba(255, 246, 220, 0.22) 0 1px, transparent 1px 6px);
-  box-shadow: inset 0 -4px 0 rgba(122, 82, 11, 0.18);
-  z-index: 2;
-}
+/* --- papan atas: permukaan berperspektif tipis + tebal papan --- */
 
-/* tebal sisi kanan: memberi kesan benda bervolume */
-.cabinet__side {
-  position: absolute;
-  top: 15px;
-  right: -11px;
-  bottom: 26px;
-  width: 11px;
-  border: var(--line);
-  border-left: 0;
-  background-color: var(--wood-3);
-  background-image: radial-gradient(rgba(32, 30, 26, 0.34) 1px, transparent 1.1px);
-  background-size: 3px 3px;
-  z-index: 1;
-}
-
-.cabinet__body {
+.unit__cap {
   position: relative;
-  z-index: 0;
-  padding: 13px 12px 12px;
-  border: 2px solid var(--ink);
-  background-color: var(--wood);
-  background-image:
-    repeating-linear-gradient(91deg, rgba(122, 82, 11, 0.2) 0 1px, transparent 1px 10px),
-    repeating-linear-gradient(88.6deg, rgba(122, 82, 11, 0.12) 0 1px, transparent 1px 6px),
-    repeating-linear-gradient(90.4deg, rgba(255, 246, 220, 0.16) 0 1px, transparent 1px 14px);
-  box-shadow: inset 0 5px 0 rgba(122, 82, 11, 0.16);
+  height: 30px;
+  z-index: 3;
 }
 
-/* kayu: satu simpul kayu (knot) sebagai hiasan */
-.knot {
+.unit__cap::before {
+  content: "";
   position: absolute;
-  width: 26px;
-  height: 13px;
-  border: 1.5px solid rgba(122, 82, 11, 0.42);
-  border-radius: 50%;
+  inset: 0 0 auto 0;
+  height: 11px;
+  background: var(--kraft-0);
+  clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%);
+}
+
+.unit__cap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 11px;
+  bottom: 0;
+  background: var(--kraft-1);
+}
+
+/* --- badan: dinding samping lebih gelap --- */
+
+.unit__body {
+  position: relative;
+  margin: 0 9px;
+  padding: 7px 0 0;
+  background: var(--kraft-1);
+  box-shadow:
+    inset 9px 0 0 var(--kraft-2),
+    inset -9px 0 0 var(--kraft-2);
+}
+
+/* celah gelap di atas muka laci */
+.unit__body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 9px;
+  right: 9px;
+  height: 7px;
+  background: var(--kraft-3);
+}
+
+/* --- muka laci --- */
+
+.face {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(172px, 48vw, 208px);
+  margin: 0 10px;
+  padding: 12px 12px 9px;
+  background: var(--paper-3);
+  overflow: hidden;
+  transition: transform 0.24s steps(4, end);
+}
+
+/* kilau diagonal: dua pita cahaya seperti pada referensi */
+.face__sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--paper-hi);
+  clip-path: polygon(0 64%, 0 42%, 100% 2%, 100% 24%);
+  opacity: 0.75;
+}
+
+.face__sheen--low {
+  clip-path: polygon(0 100%, 0 90%, 100% 50%, 100% 60%);
+  opacity: 0.5;
+}
+
+/* garis rangka dalam muka laci */
+.face__frame {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(32, 30, 26, 0.22);
   pointer-events: none;
 }
 
-.knot::after {
-  content: "";
-  position: absolute;
-  inset: 3px 6px;
-  border: 1px solid rgba(122, 82, 11, 0.3);
-  border-radius: 50%;
-}
-
-.knot--a {
-  top: 12px;
-  left: 14px;
-  transform: rotate(-12deg);
-}
-
-.knot--b {
-  bottom: 14px;
-  right: 16px;
-  transform: rotate(9deg) scale(0.8);
-}
-
-/* --------------------------------------------------------- muka laci utama */
-
-.drawer-front {
+/* tab kertas kecil: satu-satunya aksen merah */
+.face__tab {
   position: relative;
-  padding: 10px 10px 11px;
-  border: 2px solid var(--ink);
-  border-radius: 1px;
-  background-color: var(--wood-2);
-  background-image:
-    repeating-linear-gradient(92deg, rgba(122, 82, 11, 0.22) 0 1px, transparent 1px 11px),
-    repeating-linear-gradient(88.4deg, rgba(255, 246, 220, 0.18) 0 1px, transparent 1px 7px);
-  box-shadow:
-    inset 0 3px 0 rgba(122, 82, 11, 0.34),
-    inset 0 -3px 0 rgba(255, 240, 210, 0.3);
-  transition: transform 0.24s steps(4, end), box-shadow 0.24s steps(4, end);
-}
-
-/* laci ditarik keluar sedikit: muka laci turun, celah di atasnya melebar */
-.cabinet.is-open .drawer-front {
-  transform: translateY(5px);
-  box-shadow:
-    inset 0 4px 0 rgba(32, 30, 26, 0.3),
-    inset 0 -2px 0 rgba(255, 240, 210, 0.2);
-}
-
-/* celah laci: garis gelap di atas muka laci */
-.drawer-front::before {
-  content: "";
-  position: absolute;
-  top: -6px;
-  left: -2px;
-  right: -2px;
-  height: 4px;
-  background: var(--ink);
-  opacity: 0.82;
-}
-
-/* ---------------------------------------------------------- pelat kuningan */
-
-.plate {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin: 1px auto 9px;
-  padding: 5px 9px 6px;
-  max-width: 250px;
-  border: 1.5px solid var(--ink);
-  background: var(--paper-hi);
-  transform: rotate(-0.9deg);
-  box-shadow: 2px 2px 0 rgba(32, 30, 26, 0.35);
-}
-
-.plate__name {
+  gap: 4px;
+  padding: 2px 5px 3px;
+  background: var(--red);
+  color: var(--paper-hi);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 6px;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ink);
 }
 
-.plate__no {
-  font-family: var(--font-mono);
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--red);
-  padding-left: 8px;
-  border-left: 1px solid var(--ink-3);
+/* laci ditarik: muka laci turun sedikit */
+.unit.is-open .face {
+  transform: translateY(6px);
 }
 
-/* ---------------------------------------------------- label e-paper (layar) */
+/* --- label e-paper di muka laci --- */
 
 .label {
   position: relative;
-  padding: 7px 9px 8px;
-  border: 1.5px solid var(--ink);
-  background-color: var(--paper-hi);
-  box-shadow:
-    inset 0 2px 0 rgba(32, 30, 26, 0.12),
-    2px 2px 0 rgba(32, 30, 26, 0.28);
+  margin-top: 11px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(32, 30, 26, 0.26);
 }
 
 .label__date {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-2);
 }
@@ -451,16 +396,21 @@ button {
   flex: none;
   width: 5px;
   height: 5px;
-  background: var(--blue);
+  background: var(--green);
+  transition: background 0.2s steps(2, end);
+}
+
+.unit.is-open .label__dot {
+  background: var(--red);
 }
 
 .label__time {
   display: flex;
   align-items: baseline;
   gap: 1px;
-  margin-top: 4px;
+  margin-top: 3px;
   font-family: var(--font-mono);
-  font-size: clamp(1.75rem, 9vw, 2.3rem);
+  font-size: clamp(1.85rem, 9.2vw, 2.35rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -469,7 +419,7 @@ button {
 }
 
 .label__colon {
-  opacity: 0.4;
+  opacity: 0.36;
   animation: blink 2s steps(1) infinite;
 }
 
@@ -480,7 +430,7 @@ button {
   border: 1px solid var(--ink);
   background: var(--yellow);
   color: var(--ink);
-  font-size: 0.3em;
+  font-size: 0.29em;
   font-weight: 700;
   letter-spacing: 0.06em;
 }
@@ -488,7 +438,7 @@ button {
 @keyframes blink {
   0%,
   49% {
-    opacity: 0.4;
+    opacity: 0.36;
   }
   50%,
   100% {
@@ -500,14 +450,12 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
   margin-top: 5px;
-  padding-top: 4px;
-  border-top: 1px dotted var(--ink-3);
   font-family: var(--font-mono);
-  font-size: 6.5px;
+  font-size: 6px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
@@ -516,97 +464,60 @@ button {
   color: var(--red);
 }
 
-/* ketika laci ditarik, label sempat "refresh" seperti panel e-paper */
-.cabinet.is-open .label {
-  animation: refresh 0.6s steps(1) 1;
+/* --- handle: bar putih dengan bayangan keras di bawahnya --- */
+
+.handle-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-top: 12px;
+  padding-bottom: 12px;
 }
 
-@keyframes refresh {
-  0% {
-    background-color: var(--ink);
-    color: var(--paper-hi);
-  }
-  60% {
-    background-color: var(--paper-hi);
-  }
-  100% {
-    background-color: var(--paper-hi);
-  }
+.handle-shadow {
+  grid-area: 1 / 1;
+  z-index: 1;
+  width: min(146px, 62%);
+  height: 26px;
+  margin: 9px 0 0 9px;
+  background: var(--kraft-3);
+  clip-path: polygon(7% 0, 100% 0, 100% 100%, 17% 100%);
+  pointer-events: none;
 }
-
-/* --------------------------------------------------------------- handle laci */
 
 .pull {
+  grid-area: 1 / 1;
+  z-index: 2;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  width: min(216px, 78%);
-  height: 40px;
-  margin: 0;
-  padding: 0 14px;
-  border: 2px solid var(--ink);
+  gap: 7px;
+  width: min(146px, 62%);
+  height: 26px;
+  padding: 0 8px;
+  border: 0;
   border-radius: 1px;
   cursor: pointer;
+  background: var(--paper-hi);
   color: var(--ink);
-  background-color: var(--paper-3);
-  background-image:
-    repeating-linear-gradient(0deg, rgba(32, 30, 26, 0.16) 0 1px, transparent 1px 4px),
-    repeating-linear-gradient(90deg, rgba(32, 30, 26, 0.1) 0 1px, transparent 1px 13px);
-  box-shadow:
-    inset 0 2px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -3px 0 rgba(32, 30, 26, 0.22),
-    3px 3px 0 rgba(32, 30, 26, 0.55);
+  box-shadow: inset 0 -2px 0 rgba(32, 30, 26, 0.16);
   transition:
-    transform 0.1s steps(2, end),
-    box-shadow 0.1s steps(2, end);
-}
-
-/* pembungkus handle + kartu gantung */
-.handle-wrap {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin-top: 11px;
-}
-
-/* dua sekrup pemasangan handle */
-.pull::before,
-.pull::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  margin-top: -3px;
-  border: 1px solid var(--ink);
-  border-radius: 50%;
-  background: var(--ink-3);
-}
-
-.pull::before {
-  left: 6px;
-}
-
-.pull::after {
-  right: 6px;
+    transform 0.09s steps(2, end),
+    box-shadow 0.09s steps(2, end);
 }
 
 .pull:hover {
-  transform: translate(-1px, -1px);
+  transform: translateY(-1px);
   box-shadow:
-    inset 0 2px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -3px 0 rgba(32, 30, 26, 0.22),
-    4px 4px 0 rgba(32, 30, 26, 0.6);
+    inset 0 -2px 0 rgba(32, 30, 26, 0.16),
+    0 1px 0 rgba(32, 30, 26, 0.25);
 }
 
+/* ditekan: handle turun menempel bayangannya */
 .pull:active {
-  transform: translate(2px, 3px);
-  box-shadow:
-    inset 0 2px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -2px 0 rgba(32, 30, 26, 0.3),
-    1px 1px 0 rgba(32, 30, 26, 0.5);
+  transform: translateY(4px);
+  box-shadow: inset 0 2px 0 rgba(32, 30, 26, 0.22);
 }
 
 .pull:focus-visible {
@@ -616,105 +527,74 @@ button {
 
 .pull__grip {
   flex: none;
-  width: 5px;
-  height: 16px;
-  background-image: repeating-linear-gradient(
-    0deg,
-    var(--ink) 0 2px,
-    transparent 2px 5px
-  );
-  opacity: 0.45;
+  width: 4px;
+  height: 12px;
+  background-image: repeating-linear-gradient(0deg, var(--ink) 0 1.5px, transparent 1.5px 4px);
+  opacity: 0.35;
 }
 
 .pull__text {
   font-family: var(--font-mono);
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.pull__text b {
-  font-weight: 700;
-  color: var(--red);
-}
-
-/* kartu gantung kecil di handle */
-.tag {
-  position: absolute;
-  z-index: 3;
-  right: -6px;
-  bottom: -14px;
-  padding: 3px 6px 4px;
-  border: 1px solid var(--ink);
-  background: var(--paper-hi);
-  color: var(--ink-2);
-  font-family: var(--font-mono);
-  font-size: 6px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  transform: rotate(7deg);
-  box-shadow: 1px 1px 0 rgba(32, 30, 26, 0.35);
-}
-
-.tag::before {
-  content: "";
-  position: absolute;
-  top: -9px;
-  left: 7px;
-  width: 1px;
-  height: 9px;
-  background: var(--ink-3);
-}
-
-.drawer-hint {
-  margin: 9px 0 0;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 6.5px;
+  font-size: 7.5px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(32, 30, 26, 0.52);
+  white-space: nowrap;
+  color: var(--ink-2);
 }
 
-/* ------------------------------------------------------------- alas & kaki */
-
-.cabinet__base {
-  height: 11px;
-  margin: 0 5px;
-  border: 2px solid var(--ink);
-  border-top: 0;
-  background-color: var(--wood-3);
-  background-image: radial-gradient(rgba(32, 30, 26, 0.3) 1px, transparent 1.1px);
-  background-size: 3px 3px;
+.pull__text b {
+  color: var(--red);
+  font-weight: 700;
 }
 
-.cabinet__legs {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 26px;
+.drawer-hint {
+  margin: auto 0 0;
+  padding-top: 8px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 5.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(32, 30, 26, 0.42);
 }
 
-.cabinet__legs i {
-  width: 17px;
-  height: 13px;
-  border: 2px solid var(--ink);
-  border-top: 0;
-  background: var(--wood-4);
+/* --- bawah badan: alas gelap + plinth bergaris + bayangan tanah --- */
+
+.unit__under {
+  position: relative;
+  margin: 0 9px;
+  height: 10px;
+  background: var(--kraft-3);
 }
 
-/* bayangan di meja: arsir titik, bukan blur */
-.cabinet__shadow {
-  height: 9px;
-  margin: 3px 12% 0;
+.unit__plinth {
+  margin: 0 14px;
+  height: 20px;
+  background-color: var(--kraft-2);
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(32, 30, 26, 0.22) 0 1.5px,
+    transparent 1.5px 7px
+  );
+}
+
+.unit__plinth::before {
+  content: "";
+  display: block;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.unit__shadow {
+  height: 14px;
+  margin: 3px 5% 0;
   background-image: radial-gradient(var(--ink) 1px, transparent 1.2px);
   background-size: 4px 4px;
-  opacity: 0.42;
-  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  opacity: 0.34;
+  mask-image: radial-gradient(52% 100% at 50% 40%, #000 34%, transparent 80%);
+  -webkit-mask-image: radial-gradient(52% 100% at 50% 40%, #000 34%, transparent 80%);
 }
 
 /* ============================================================== kaki halaman */
@@ -761,13 +641,13 @@ button {
   background: var(--green);
 }
 
-/* ========================================================= laci yang ditarik */
+/* ========================================================= laci ditarik */
 
 .scrim {
   position: fixed;
   inset: 0;
   z-index: 30;
-  background: rgba(32, 30, 26, 0.42);
+  background: rgba(32, 30, 26, 0.4);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -779,7 +659,7 @@ button {
   inset: 0;
   background-image: radial-gradient(var(--ink) 1px, transparent 1.1px);
   background-size: 4px 4px;
-  opacity: 0.24;
+  opacity: 0.22;
 }
 
 .scrim.is-on {
@@ -787,7 +667,7 @@ button {
   pointer-events: auto;
 }
 
-/* baki laci: rangka kayu, isi kertas */
+/* baki laci: rangka kraft, isi kertas */
 .sheet {
   position: fixed;
   inset-inline: 0;
@@ -795,9 +675,8 @@ button {
   z-index: 40;
   display: flex;
   justify-content: center;
-  padding: 0;
   transform: translateY(104%);
-  transition: transform 0.42s steps(6, end);
+  transition: transform 0.4s steps(6, end);
   will-change: transform;
 }
 
@@ -812,34 +691,9 @@ button {
   width: min(452px, 100%);
   max-height: min(94dvh, 800px);
   overflow: hidden;
-  border: 3px solid var(--ink);
-  border-bottom: 0;
-  background-color: var(--wood);
-  background-image:
-    repeating-linear-gradient(91deg, rgba(122, 82, 11, 0.2) 0 1px, transparent 1px 10px),
-    repeating-linear-gradient(88.4deg, rgba(255, 246, 220, 0.16) 0 1px, transparent 1px 7px);
-}
-
-/* dinding dalam laci: dua sisi gelap */
-.sheet__card::before,
-.sheet__card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 7px;
-  background-image: radial-gradient(rgba(32, 30, 26, 0.5) 1px, transparent 1.1px);
-  background-size: 3px 3px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.sheet__card::before {
-  left: 0;
-}
-
-.sheet__card::after {
-  right: 0;
+  border-top: 7px solid var(--kraft-3);
+  background: var(--kraft-1);
+  box-shadow: inset 9px 0 0 var(--kraft-2), inset -9px 0 0 var(--kraft-2);
 }
 
 .sheet__lip {
@@ -848,12 +702,8 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 18px 10px 14px;
-  border-bottom: 2px solid var(--ink);
-  background-color: var(--wood-3);
-  background-image:
-    repeating-linear-gradient(90.4deg, rgba(122, 82, 11, 0.28) 0 1px, transparent 1px 9px);
-  box-shadow: inset 0 2px 0 rgba(255, 240, 210, 0.28);
+  padding: 9px 12px 9px 16px;
+  background: var(--kraft-1);
 }
 
 .sheet__label {
@@ -861,40 +711,38 @@ button {
   align-items: center;
   gap: 7px;
   font-family: var(--font-mono);
-  font-size: 7.5px;
+  font-size: 7px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--paper-hi);
-  text-shadow: 0 1px 0 rgba(32, 30, 26, 0.5);
+  color: var(--ink-2);
 }
 
 .sheet__close {
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 27px;
+  height: 27px;
   margin-left: auto;
   padding: 0;
   border: 1.5px solid var(--ink);
-  border-radius: 1px;
   background: var(--paper-hi);
   color: var(--ink);
   cursor: pointer;
-  box-shadow: 2px 2px 0 rgba(32, 30, 26, 0.5);
+  box-shadow: 2px 2px 0 var(--kraft-3);
   transition:
-    transform 0.1s steps(2, end),
-    box-shadow 0.1s steps(2, end);
+    transform 0.09s steps(2, end),
+    box-shadow 0.09s steps(2, end);
 }
 
 .sheet__close:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0 rgba(32, 30, 26, 0.55);
+  box-shadow: 3px 3px 0 var(--kraft-3);
 }
 
 .sheet__close:active {
   transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 rgba(32, 30, 26, 0.5);
+  box-shadow: 1px 1px 0 var(--kraft-3);
 }
 
 .sheet__close:focus-visible {
@@ -902,17 +750,17 @@ button {
   outline-offset: 2px;
 }
 
-/* kertas formulir di dalam laci */
+/* kertas formulir */
 .sheet__body {
   overflow-y: auto;
   overscroll-behavior: contain;
-  margin: 0 7px;
-  padding: 15px 13px calc(16px + env(safe-area-inset-bottom));
-  background-color: var(--paper);
+  margin: 0 9px;
+  padding: 14px 12px calc(15px + env(safe-area-inset-bottom));
+  background: var(--paper);
   box-shadow:
-    inset 5px 0 0 rgba(32, 30, 26, 0.09),
-    inset -5px 0 0 rgba(32, 30, 26, 0.09),
-    inset 0 6px 0 rgba(32, 30, 26, 0.06);
+    inset 5px 0 0 rgba(32, 30, 26, 0.08),
+    inset -5px 0 0 rgba(32, 30, 26, 0.08),
+    inset 0 5px 0 rgba(32, 30, 26, 0.06);
 }
 
 .sheet.is-on .rise {
@@ -934,7 +782,7 @@ button {
 /* ============================================================== formulir */
 
 .form-head {
-  margin-bottom: 12px;
+  margin-bottom: 11px;
 }
 
 .kicker {
@@ -943,7 +791,7 @@ button {
   gap: 6px;
   margin: 0 0 6px;
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 6.5px;
   font-weight: 700;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -952,38 +800,36 @@ button {
 
 .kicker::before {
   content: "";
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   background: var(--red);
 }
 
 .form-head h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.42rem;
+  font-size: 1.34rem;
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  line-height: 1.12;
   color: var(--ink);
 }
 
 .form-head p {
   margin: 5px 0 0;
-  font-size: 0.79rem;
+  font-size: 0.76rem;
   line-height: 1.45;
   color: var(--ink-2);
 }
 
-/* garis ganda ala formulir cetak */
 .rule {
-  height: 4px;
-  margin: 11px 0 13px;
+  height: 3px;
+  margin: 10px 0 12px;
   border-top: 1px solid var(--ink-3);
   border-bottom: 1px solid var(--ink-3);
 }
 
 .field {
-  margin-bottom: 11px;
+  margin-bottom: 10px;
 }
 
 .field__label {
@@ -993,7 +839,7 @@ button {
   gap: 6px;
   margin-bottom: 4px;
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 6.5px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -1009,16 +855,15 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  height: 44px;
+  height: 42px;
   padding: 0 9px;
   border: 1.5px solid var(--ink);
-  border-radius: 0;
   background: var(--paper-hi);
-  transition: box-shadow 0.1s steps(2, end);
+  transition: box-shadow 0.09s steps(2, end);
 }
 
 .field__wrap:focus-within {
-  box-shadow: 3px 3px 0 var(--ink-3);
+  box-shadow: 3px 3px 0 var(--kraft-3);
 }
 
 .field__wrap.is-error {
@@ -1044,7 +889,7 @@ button {
   outline: none;
   background: transparent;
   font-family: var(--font-mono);
-  font-size: 0.79rem;
+  font-size: 0.76rem;
   color: var(--ink);
 }
 
@@ -1056,11 +901,10 @@ button {
   display: grid;
   place-items: center;
   flex: none;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   padding: 0;
   border: 1px solid transparent;
-  border-radius: 0;
   background: transparent;
   color: var(--ink-2);
   cursor: pointer;
@@ -1068,7 +912,7 @@ button {
 
 .field__toggle:hover {
   border-color: var(--ink-3);
-  background: var(--paper-3);
+  background: var(--paper-2);
 }
 
 .field__toggle:focus-visible {
@@ -1082,7 +926,7 @@ button {
   gap: 5px;
   margin: 5px 0 0;
   font-family: var(--font-mono);
-  font-size: 7.5px;
+  font-size: 7px;
   font-weight: 700;
   color: var(--red);
 }
@@ -1092,7 +936,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin: 3px 0 13px;
+  margin: 3px 0 12px;
 }
 
 .check {
@@ -1101,7 +945,7 @@ button {
   gap: 6px;
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 7.5px;
   color: var(--ink-2);
   user-select: none;
 }
@@ -1115,10 +959,9 @@ button {
 .check__box {
   display: grid;
   place-items: center;
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   border: 1.5px solid var(--ink);
-  border-radius: 0;
   background: var(--paper-hi);
   color: var(--paper-hi);
 }
@@ -1138,7 +981,7 @@ button {
   background: none;
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 700;
   color: var(--red);
   text-decoration: underline;
@@ -1155,28 +998,27 @@ button {
   outline-offset: 3px;
 }
 
-/* tombol = stempel tinta */
+/* tombol = blok tinta */
 .btn-primary {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
-  height: 47px;
+  height: 45px;
   border: 2px solid var(--ink);
-  border-radius: 0;
   background: var(--ink);
   color: var(--paper-hi);
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   box-shadow: 4px 4px 0 var(--red);
   transition:
-    transform 0.1s steps(2, end),
-    box-shadow 0.1s steps(2, end);
+    transform 0.09s steps(2, end),
+    box-shadow 0.09s steps(2, end);
 }
 
 .btn-primary:hover {
@@ -1218,9 +1060,9 @@ button {
   display: flex;
   align-items: center;
   gap: 9px;
-  margin: 12px 0;
+  margin: 11px 0;
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 6.5px;
   font-weight: 700;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -1241,20 +1083,19 @@ button {
   justify-content: center;
   gap: 7px;
   width: 100%;
-  height: 42px;
+  height: 40px;
   border: 1.5px dashed var(--ink-2);
-  border-radius: 0;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   transition:
-    background 0.1s steps(2, end),
-    transform 0.1s steps(2, end);
+    background 0.09s steps(2, end),
+    transform 0.09s steps(2, end);
 }
 
 .btn-ghost:hover {
@@ -1268,12 +1109,11 @@ button {
 }
 
 .form-note {
-  margin: 11px 0 0;
+  margin: 10px 0 0;
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 6.5px;
   line-height: 1.9;
-  letter-spacing: 0.04em;
   color: var(--ink-3);
 }
 
@@ -1291,23 +1131,21 @@ button {
   padding: 8px 2px 2px;
 }
 
-/* stempel karet */
 .stamp {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   gap: 1px;
-  margin-bottom: 16px;
-  padding: 8px 14px 9px;
+  margin-bottom: 14px;
+  padding: 8px 13px 9px;
   border: 3px double var(--red);
-  border-radius: 2px;
   color: var(--red);
   transform: rotate(-4deg);
 }
 
 .stamp strong {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -1315,7 +1153,7 @@ button {
 
 .stamp span {
   font-family: var(--font-mono);
-  font-size: 6px;
+  font-size: 5.5px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -1325,14 +1163,14 @@ button {
 .success h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.32rem;
+  font-size: 1.26rem;
   font-weight: 600;
 }
 
 .success p {
-  margin: 6px 0 17px;
+  margin: 6px 0 16px;
   max-width: 30ch;
-  font-size: 0.79rem;
+  font-size: 0.76rem;
   line-height: 1.55;
   color: var(--ink-2);
 }
@@ -1346,37 +1184,41 @@ button {
 @media (max-width: 380px) {
   .scene {
     padding-inline: 10px;
-    gap: 11px;
+    gap: 10px;
   }
-  .cabinet {
-    width: 100%;
+  .unit {
+    width: 90%;
   }
-  .drawer-front {
-    padding: 8px 8px 9px;
+  .face {
+    padding: 10px 10px 9px;
   }
-  .pull {
-    height: 37px;
+  .label__time {
+    font-size: 1.7rem;
   }
   .sheet__body {
-    padding: 13px 11px calc(14px + env(safe-area-inset-bottom));
+    padding: 12px 10px calc(13px + env(safe-area-inset-bottom));
   }
 }
 
-@media (max-height: 730px) {
+@media (max-height: 720px) {
   .scene {
     justify-content: flex-start;
-    padding-top: 14px;
-  }
-  .brand__mark {
-    width: 28px;
-    height: 28px;
-    font-size: 15px;
+    padding-top: 12px;
   }
   .brand__tag {
     display: none;
   }
-  .cabinet__legs i {
-    height: 10px;
+  .unit__cap {
+    height: 24px;
+  }
+  .unit__cap::before {
+    height: 9px;
+  }
+  .unit__cap::after {
+    top: 9px;
+  }
+  .unit__plinth {
+    height: 16px;
   }
   .drawer-hint {
     display: none;
