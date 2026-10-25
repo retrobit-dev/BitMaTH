@@ -19,16 +19,19 @@ Akun demo: `guru@bitmath.id` / `bitmath123` — atau **Masuk sebagai tamu**.
 
 ## Layar login
 
-Layar pertama yang dilihat pemain: **gerbang sekolah** saat senja — langit
-berlapis dengan bulan dan bintang, gedung sekolah dengan menara jam dan
-jendela bercahaya, pepohonan, pagar besi, dua tiang gerbang dengan papan nama
-emas, daun gerbang terbuka, lampu taman, bendera merah-putih, halaman dalam
-dengan pintu masuk bercahaya, dan jalan masuk beraspal. Guru PDH berdiri
-di depan gerbang.
+Layar pertama yang dilihat pemain: **gerbang SMA Negeri Rembang saat pagi
+terang** — langit biru muda berlapis dengan matahari rendah, awan putih, dan
+burung; gedung sekolah berkrem beratap terakota dengan menara jam dan jendela
+kaca terang; pepohonan hijau; pagar besi hijau tua; dua tiang gerbang dengan
+papan nama hijau berhuruf krem "SMA NEGERI REMBANG"; daun gerbang terbuka;
+lampu taman; bendera merah-putih; halaman dalam dengan pintu masuk hangat;
+serta jalan masuk beraspal terang berkerb. Guru PDH berdiri di depan gerbang.
 
 Di atasnya: HUD slot "GERBANG SEKOLAH" + tanggal/jam berjalan, plakat BITMATH,
 dan panel dialog bergaya game.
 
+- **Palet pagi** — langit `#7fb6d8` → `#c4e2f0`, gedung `#e6d9bd`, atap `#b8573a`,
+  pagar `#26443a`, rumput `#6a9b4d`, aspal `#c9c3b4`.
 - **Panel dialog** — bertepi keras, bar judul bergaya jendela game,
   field NIP/email & kata sandi dengan label bernomor.
 - **Komposisi** — lanskap digeser 40 unit ke atas supaya kaki karakter dan
