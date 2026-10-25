@@ -89,47 +89,12 @@ export function IconArrowRight({ size = 17, strokeWidth = 2, className }: IconPr
   )
 }
 
-export function IconCalendar({ size = 12, strokeWidth = 1.9, className }: IconProps) {
-  return (
-    <svg {...base(size, strokeWidth)} className={className}>
-      <rect x="3.4" y="5.2" width="17.2" height="15.4" rx="2.6" />
-      <path d="M3.4 10h17.2M8.4 3.4v3.4M15.6 3.4v3.4" />
-    </svg>
-  )
-}
-
-export function IconChevronUp({ size = 18, strokeWidth = 2.2, className }: IconProps) {
-  return (
-    <svg {...base(size, strokeWidth)} className={className}>
-      <path d="M5.5 14.5 12 8l6.5 6.5" />
-    </svg>
-  )
-}
-
 export function IconDrawer({ size = 16, strokeWidth = 1.8, className }: IconProps) {
   return (
     <svg {...base(size, strokeWidth)} className={className}>
       <rect x="3" y="5" width="18" height="14" rx="2.4" />
       <path d="M3 11.5h18" />
       <path d="M9.6 8.2h4.8M9.6 14.8h4.8" />
-    </svg>
-  )
-}
-
-export function IconShield({ size = 17, strokeWidth = 1.8, className }: IconProps) {
-  return (
-    <svg {...base(size, strokeWidth)} className={className}>
-      <path d="M12 3.2 4.8 6v5.6c0 4.1 3 7.3 7.2 9.2 4.2-1.9 7.2-5.1 7.2-9.2V6Z" />
-      <path d="M9 12.2l2.2 2.2 4-4.2" />
-    </svg>
-  )
-}
-
-export function IconSpark({ size = 14, strokeWidth = 1.8, className }: IconProps) {
-  return (
-    <svg {...base(size, strokeWidth)} className={className}>
-      <path d="M12 3.4l1.9 4.9 4.9 1.9-4.9 1.9L12 17l-1.9-4.9L5.2 10.2l4.9-1.9Z" />
-      <path d="M18.4 15.2l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7Z" />
     </svg>
   )
 }

@@ -10,7 +10,6 @@ import {
   IconEyeOff,
   IconInfo,
   IconLock,
-  IconShield,
   IconUser,
 } from './Icons'
 
@@ -149,9 +148,8 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
       >
         <div className="sheet__card">
           <div className="sheet__lip">
-            <span className="sheet__grip" aria-hidden="true" />
             <span className="sheet__label">
-              <IconDrawer size={14} />
+              <IconDrawer size={13} />
               Laci terbuka · Autentikasi
             </span>
             <button
@@ -167,22 +165,23 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
           <div className="sheet__body">
             {session ? (
               <div className="success" role="status">
-                <div className="success__icon" aria-hidden="true">
-                  <IconCheck size={30} strokeWidth={2.6} />
+                <div className="stamp" aria-hidden="true">
+                  <strong>Terverifikasi</strong>
+                  <span>BitMaTH · Laci 01</span>
                 </div>
                 <h3>Laci siap dipakai</h3>
                 <p>
-                  Selamat datang, <strong>{session.name}</strong>. {session.role}.
-                  Autentikasi server akan disambungkan pada tahap berikutnya.
+                  Selamat datang, <strong>{session.name}</strong>. {session.role}. Autentikasi
+                  server akan disambungkan pada tahap berikutnya.
                 </p>
                 <button type="button" className="btn-primary" onClick={onClose}>
+                  <IconCheck size={14} strokeWidth={2.6} />
                   Mulai kerja
-                  <IconArrowRight />
                 </button>
                 <button
                   type="button"
                   className="link-btn"
-                  style={{ marginTop: 14 }}
+                  style={{ marginTop: 15 }}
                   onClick={resetToForm}
                 >
                   Kembali ke form
@@ -190,23 +189,22 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
               </div>
             ) : (
               <>
-                <div className="form-head rise" style={{ ['--d' as string]: '60ms' }}>
-                  <div className="form-head__badge" aria-hidden="true">
-                    <IconShield size={20} />
-                  </div>
-                  <div>
-                    <h2>Masuk ke BitMaTH</h2>
-                    <p>Gunakan akun guru untuk membuka seluruh perangkat laci.</p>
-                  </div>
+                <div className="form-head rise" style={{ ['--d' as string]: '50ms' }}>
+                  <p className="kicker">Form 01 · Masuk</p>
+                  <h2>Buka laci kerja Anda</h2>
+                  <p>Gunakan akun guru untuk membuka seluruh perangkat di dalam laci.</p>
                 </div>
+
+                <div className="rule rise" style={{ ['--d' as string]: '90ms' }} />
 
                 <form onSubmit={handleSubmit} noValidate>
                   <div className="field rise" style={{ ['--d' as string]: '120ms' }}>
                     <label className="field__label" htmlFor="identity">
-                      Email / NIP
+                      <span>Email / NIP</span>
+                      <span>01</span>
                     </label>
                     <div className={`field__wrap${errors.identity ? ' is-error' : ''}`}>
-                      <IconUser />
+                      <IconUser size={16} />
                       <input
                         id="identity"
                         name="identity"
@@ -232,12 +230,13 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
                     )}
                   </div>
 
-                  <div className="field rise" style={{ ['--d' as string]: '170ms' }}>
+                  <div className="field rise" style={{ ['--d' as string]: '160ms' }}>
                     <label className="field__label" htmlFor="password">
-                      Kata sandi
+                      <span>Kata sandi</span>
+                      <span>02</span>
                     </label>
                     <div className={`field__wrap${errors.password ? ' is-error' : ''}`}>
-                      <IconLock />
+                      <IconLock size={16} />
                       <input
                         id="password"
                         name="password"
@@ -259,7 +258,7 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
                         aria-label={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
                         aria-pressed={showPassword}
                       >
-                        {showPassword ? <IconEyeOff /> : <IconEye />}
+                        {showPassword ? <IconEyeOff size={16} /> : <IconEye size={16} />}
                       </button>
                     </div>
                     {errors.password && (
@@ -270,7 +269,7 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
                     )}
                   </div>
 
-                  <div className="form-row rise" style={{ ['--d' as string]: '220ms' }}>
+                  <div className="form-row rise" style={{ ['--d' as string]: '200ms' }}>
                     <label className="check">
                       <input
                         type="checkbox"
@@ -287,7 +286,7 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
                     </button>
                   </div>
 
-                  <div className="rise" style={{ ['--d' as string]: '270ms' }}>
+                  <div className="rise" style={{ ['--d' as string]: '240ms' }}>
                     <button type="submit" className="btn-primary" disabled={loading}>
                       {loading ? (
                         <>
@@ -297,27 +296,28 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
                       ) : (
                         <>
                           Masuk
-                          <IconArrowRight />
+                          <IconArrowRight size={15} />
                         </>
                       )}
                     </button>
                   </div>
                 </form>
 
-                <div className="divider rise" style={{ ['--d' as string]: '320ms' }}>
+                <div className="divider rise" style={{ ['--d' as string]: '290ms' }}>
                   atau
                 </div>
 
-                <div className="rise" style={{ ['--d' as string]: '360ms' }}>
+                <div className="rise" style={{ ['--d' as string]: '330ms' }}>
                   <button type="button" className="btn-ghost" onClick={handleGuest}>
-                    <IconInfo />
+                    <IconInfo size={13} />
                     Jelajahi tanpa akun
                   </button>
                 </div>
 
-                <p className="form-note rise" style={{ ['--d' as string]: '400ms' }}>
-                  Tahap pengembangan: gunakan <strong>{DEMO_ACCOUNT.identity}</strong> /{' '}
-                  <strong>{DEMO_ACCOUNT.password}</strong>
+                <p className="form-note rise" style={{ ['--d' as string]: '370ms' }}>
+                  Tahap pengembangan — akun demo:
+                  <br />
+                  <strong>{DEMO_ACCOUNT.identity}</strong> / <strong>{DEMO_ACCOUNT.password}</strong>
                 </p>
               </>
             )}

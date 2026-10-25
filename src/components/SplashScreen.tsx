@@ -1,7 +1,6 @@
 import type { ClockSnapshot } from '../hooks/useClock'
 import { FormulaBackdrop } from './FormulaBackdrop'
-import { IconChevronUp, IconSpark } from './Icons'
-import { LcdScreen } from './LcdScreen'
+import { PaperScreen } from './PaperScreen'
 
 type SplashScreenProps = {
   clock: ClockSnapshot
@@ -16,7 +15,7 @@ export function SplashScreen({ clock, isOpen, onOpenDrawer }: SplashScreenProps)
 
       <div className="scene__content">
         <header className="brand">
-          <div className="brand__badge" aria-hidden="true">
+          <div className="brand__mark" aria-hidden="true">
             √
           </div>
           <h1 className="brand__name">
@@ -28,52 +27,50 @@ export function SplashScreen({ clock, isOpen, onOpenDrawer }: SplashScreenProps)
         <div className={`cabinet${isOpen ? ' is-open' : ''}`}>
           <div className="console">
             <div className="console__row">
-              <span className="console__label">BitMaTH · Panel 01</span>
-              <span className="led">
-                <i className="led__dot" aria-hidden="true" />
+              <span className="console__label">Panel 01 · E-Paper</span>
+              <span className="status">
+                <i className="status__dot" aria-hidden="true" />
                 {isOpen ? 'Siap' : 'Siaga'}
               </span>
             </div>
 
-            <LcdScreen clock={clock} isOpen={isOpen} />
+            <PaperScreen clock={clock} isOpen={isOpen} />
           </div>
 
           <div className="drawer">
-            <span className="screw screw--tl" aria-hidden="true" />
-            <span className="screw screw--tr" aria-hidden="true" />
-            <span className="screw screw--bl" aria-hidden="true" />
-            <span className="screw screw--br" aria-hidden="true" />
+            <span className="reg reg--tl" aria-hidden="true" />
+            <span className="reg reg--tr" aria-hidden="true" />
+            <span className="reg reg--bl" aria-hidden="true" />
+            <span className="reg reg--br" aria-hidden="true" />
 
-            <span className="plate">
-              <span aria-hidden="true">▸ </span>Laci Pintar
-            </span>
+            <span className="tab">Laci pintar</span>
 
-            <div className="open-slot">
-              <button
-                type="button"
-                className="open-btn"
-                onClick={onOpenDrawer}
-                aria-expanded={isOpen}
-                aria-label="Buka laci pintar dan masuk"
-              >
-                <span className="open-btn__icon" aria-hidden="true">
-                  <IconChevronUp size={20} />
-                </span>
-                <span className="open-btn__text">Buka</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              className="handle"
+              onClick={onOpenDrawer}
+              aria-expanded={isOpen}
+              aria-label="Buka laci pintar dan masuk"
+            >
+              <span className="handle__grip" aria-hidden="true" />
+              <span className="handle__text">Buka</span>
+              <span className="handle__grip" aria-hidden="true" />
+            </button>
 
-            <p className="drawer__hint">
-              {clock.greeting} · tekan tombol untuk masuk
-            </p>
+            <p className="drawer__hint">{clock.greeting} · tekan tuas untuk masuk</p>
           </div>
         </div>
 
         <footer className="scene__footer">
-          <IconSpark size={12} />
-          <span>Ruang kerja matematika</span>
-          <i aria-hidden="true" />
-          <span>v0.1</span>
+          <span className="spectra" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+          </span>
+          <span>Spectra 6 · v0.1</span>
         </footer>
       </div>
     </main>
