@@ -19,13 +19,20 @@ Akun demo: `guru@bitmath.id` / `bitmath123` — atau **Masuk sebagai tamu**.
 
 ## Layar login
 
-Layar pertama yang dilihat pemain: ruang kelas isometrik di malam hari
-(papan tulis, jam dinding, jendela, lampu gantung, meja murid) dengan guru
-PDH berdiri di lantai. Di atasnya: HUD slot data guru + tanggal/jam berjalan,
-plakat BITMATH, dan panel dialog bergaya game.
+Layar pertama yang dilihat pemain: **gerbang sekolah** saat senja — langit
+berlapis dengan bulan dan bintang, gedung sekolah dengan menara jam dan
+jendela bercahaya, pepohonan, pagar besi, dua tiang gerbang dengan papan nama
+emas, daun gerbang terbuka, lampu taman, bendera merah-putih, halaman dalam
+dengan pintu masuk bercahaya, dan jalan masuk beraspal. Guru PDH berdiri
+di depan gerbang.
+
+Di atasnya: HUD slot "GERBANG SEKOLAH" + tanggal/jam berjalan, plakat BITMATH,
+dan panel dialog bergaya game.
 
 - **Panel dialog** — bertepi keras, bar judul bergaya jendela game,
   field NIP/email & kata sandi dengan label bernomor.
+- **Komposisi** — lanskap digeser 40 unit ke atas supaya kaki karakter dan
+  dasar gerbang tetap terlihat di balik panel saat layar HP rendah.
 - **Aksi** — `MULAI` untuk masuk, `MASUK SEBAGAI TAMU` untuk melihat tanpa akun.
   Enter mengirim formulir, Esc membatalkan sesi tamu.
 - **Berhasil** — panel berganti jadi "GURU SIAP MENGAJAR" menampilkan sprite
@@ -37,13 +44,14 @@ plakat BITMATH, dan panel dialog bergaya game.
 ```
 public/sprites/          # aset karakter pixel-art (lihat README di dalam)
 scripts/build-sprites.sh  # pembangun ulang sprite sheet
+scripts/preview-scene.py  # pratinjau komposisi scene tanpa browser (ImageMagick)
 src/
 ├── App.tsx
 ├── styles.css            # tema game: panel, HUD, CRT, tipografi pixel
 ├── hooks/useClock.ts     # jam, tanggal Indonesia, tahun ajaran & semester
 └── components/
     ├── GameLogin.tsx     # layar login game (form + status siap)
-    ├── ClassroomScene.tsx# panggung kelas isometrik (SVG blok piksel)
+    ├── SchoolGateScene.tsx # panggung gerbang sekolah (SVG blok piksel)
     └── Icons.tsx         # ikon SVG inline
 ```
 
@@ -70,7 +78,7 @@ Detail sel, fps, dan cara pakai ada di `public/sprites/README.md`.
 
 ## Roadmap
 
-1. **Tahap 1 (selesai)** — layar login game + aset karakter (pose & sheet).
+1. **Tahap 1 (selesai)** — layar login game dengan latar gerbang sekolah + aset karakter.
 2. **Tahap 2** — backend autentikasi, penyimpanan progres, layar dasbor guru.
 3. **Tahap 3** — inti permainan: jadwal kelas, bank soal, penilaian, misi harian.
 4. **Tahap 4** — sprite `back` + animasi jalan, offline-first, build APK.

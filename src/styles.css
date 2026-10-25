@@ -122,7 +122,7 @@ img {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(10, 8, 7, 0.34);
+  background: rgba(10, 8, 7, 0.26);
   pointer-events: none;
 }
 

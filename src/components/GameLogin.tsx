@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useClock } from '../hooks/useClock'
-import { ClassroomScene } from './ClassroomScene'
+import { SchoolGateScene } from './SchoolGateScene'
 import { IconAlert, IconArrow, IconCheck, IconEye, IconEyeOff, IconLock, IconUser } from './Icons'
 
 type Errors = { identity?: string; password?: string }
@@ -73,14 +73,14 @@ export function GameLogin() {
 
   return (
     <div className="game">
-      <ClassroomScene />
+      <SchoolGateScene />
       <div className="stage-shade" aria-hidden="true" />
       <div className="crt" aria-hidden="true" />
 
       <header className="hud">
         <span className="hud__slot">
           <i className="hud__dot" aria-hidden="true" />
-          SLOT 01 · DATA GURU
+          SLOT 01 · GERBANG SEKOLAH
         </span>
         <span className="hud__clock">
           {clock.shortDate} · {clock.time}
@@ -98,11 +98,11 @@ export function GameLogin() {
           </div>
         </div>
 
-        <section className="panel" aria-label="Masuk permainan">
+        <section className="panel" aria-label="Masuk gerbang sekolah">
           <div className="panel__bar">
             <span className="panel__title">
               <i aria-hidden="true" />
-              {player ? 'SELAMAT DATANG' : 'MASUK KELAS'}
+              {player ? 'SELAMAT DATANG' : 'MASUK GERBANG'}
             </span>
             <span className="panel__tag">v0.3</span>
           </div>
