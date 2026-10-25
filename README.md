@@ -39,6 +39,12 @@ dan panel dialog bergaya game.
   karakter, nama, tahun ajaran dan semester berjalan.
 - **Efek layar** — garis pindai + butiran + vignette, semua sudut siku.
 
+## Pratinjau komposisi
+
+`docs/gate-preview.png` — hasil `scripts/preview-scene.py`, pratinjau kasar
+gerbang (tanpa teks & sprite). Garis merah menandai perkiraan batas atas panel
+login; semua elemen penting berada di atasnya.
+
 ## Struktur
 
 ```
