@@ -8,6 +8,10 @@ type SplashScreenProps = {
   onOpenDrawer: () => void
 }
 
+/**
+ * Splash: sebuah laci kayu di atas meja kerja guru.
+ * Papan atas menjorok, sisi bertebal, alas berkaki, bayangan arsir di meja.
+ */
 export function SplashScreen({ clock, isOpen, onOpenDrawer }: SplashScreenProps) {
   return (
     <main className={`scene${isOpen ? ' is-open' : ''}`}>
@@ -25,40 +29,51 @@ export function SplashScreen({ clock, isOpen, onOpenDrawer }: SplashScreenProps)
         </header>
 
         <div className={`cabinet${isOpen ? ' is-open' : ''}`}>
-          <div className="console">
-            <div className="console__row">
-              <span className="console__label">Panel 01 · E-Paper</span>
-              <span className="status">
-                <i className="status__dot" aria-hidden="true" />
-                {isOpen ? 'Siap' : 'Siaga'}
-              </span>
+          <span className="cabinet__top" aria-hidden="true" />
+          <span className="cabinet__side" aria-hidden="true" />
+
+          <div className="cabinet__body">
+            <span className="knot knot--a" aria-hidden="true" />
+            <span className="knot knot--b" aria-hidden="true" />
+
+            <div className="drawer-front">
+              <div className="plate">
+                <span className="plate__name">Laci Pintar</span>
+                <span className="plate__no">No. 01</span>
+              </div>
+
+              <PaperScreen clock={clock} isOpen={isOpen} />
+
+              <div className="handle-wrap">
+                <button
+                  type="button"
+                  className="pull"
+                  onClick={onOpenDrawer}
+                  aria-expanded={isOpen}
+                  aria-label="Tarik handle untuk membuka laci dan masuk"
+                >
+                  <span className="pull__grip" aria-hidden="true" />
+                  <span className="pull__text">
+                    Tarik · <b>Buka</b>
+                  </span>
+                  <span className="pull__grip" aria-hidden="true" />
+                </button>
+
+                <span className="tag" aria-hidden="true">
+                  T.A. {clock.schoolYear}
+                </span>
+              </div>
+
+              <p className="drawer-hint">{clock.greeting} · tarik handle untuk membuka</p>
             </div>
-
-            <PaperScreen clock={clock} isOpen={isOpen} />
           </div>
 
-          <div className="drawer">
-            <span className="reg reg--tl" aria-hidden="true" />
-            <span className="reg reg--tr" aria-hidden="true" />
-            <span className="reg reg--bl" aria-hidden="true" />
-            <span className="reg reg--br" aria-hidden="true" />
-
-            <span className="tab">Laci pintar</span>
-
-            <button
-              type="button"
-              className="handle"
-              onClick={onOpenDrawer}
-              aria-expanded={isOpen}
-              aria-label="Buka laci pintar dan masuk"
-            >
-              <span className="handle__grip" aria-hidden="true" />
-              <span className="handle__text">Buka</span>
-              <span className="handle__grip" aria-hidden="true" />
-            </button>
-
-            <p className="drawer__hint">{clock.greeting} · tekan tuas untuk masuk</p>
+          <div className="cabinet__base" aria-hidden="true" />
+          <div className="cabinet__legs" aria-hidden="true">
+            <i />
+            <i />
           </div>
+          <div className="cabinet__shadow" aria-hidden="true" />
         </div>
 
         <footer className="scene__footer">

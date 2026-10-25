@@ -150,7 +150,7 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
           <div className="sheet__lip">
             <span className="sheet__label">
               <IconDrawer size={13} />
-              Laci terbuka · Autentikasi
+              Laci 01 · Formulir masuk
             </span>
             <button
               type="button"
@@ -190,8 +190,8 @@ export function AuthSheet({ open, onClose }: AuthSheetProps) {
             ) : (
               <>
                 <div className="form-head rise" style={{ ['--d' as string]: '50ms' }}>
-                  <p className="kicker">Form 01 · Masuk</p>
-                  <h2>Buka laci kerja Anda</h2>
+                  <p className="kicker">Formulir 01 · Masuk</p>
+                  <h2>Isi formulir masuk</h2>
                   <p>Gunakan akun guru untuk membuka seluruh perangkat di dalam laci.</p>
                 </div>
 

@@ -6,37 +6,40 @@ type PaperScreenProps = {
 }
 
 /**
- * Layar mini e-paper: tanggal & jam hari ini.
- * Hanya tinta di atas kertas — blok jam dibalik (hitam) agar terbaca seperti
- * cetak, dengan penanda detik berwarna kuning Spectra.
+ * Label e-paper di muka laci: tanggal & jam hari ini.
+ * Ditempel seperti kartu label — bukan layar menyala.
  */
 export function PaperScreen({ clock, isOpen }: PaperScreenProps) {
   const [hours, minutes] = clock.time.split(':')
 
   return (
-    <section className="screen" aria-label="Layar mini: tanggal dan jam hari ini">
-      <div className="screen__head">
-        <span className="screen__flag" aria-hidden="true" />
+    <div
+      className="label"
+      role="group"
+      aria-label={`Label tanggal dan jam. ${clock.longDate}, pukul ${clock.fullTime}`}
+    >
+      <div className="label__date">
+        <span className="label__dot" aria-hidden="true" />
         <span>{clock.longDate}</span>
       </div>
 
-      <div className="screen__time" role="timer" aria-live="off">
+      <div className="label__time" role="timer" aria-live="off">
         <span>{hours}</span>
-        <span className="screen__colon" aria-hidden="true">
+        <span className="label__colon" aria-hidden="true">
           :
         </span>
         <span>{minutes}</span>
-        <span className="screen__secs" aria-label={`${clock.seconds} detik`}>
+        <span className="label__sec" aria-hidden="true">
           {clock.seconds}
         </span>
       </div>
 
-      <div className="screen__foot">
+      <div className="label__foot">
         <span>{isOpen ? 'Laci terbuka' : 'Laci terkunci'}</span>
         <span>
           T.A. {clock.schoolYear} · {clock.semester}
         </span>
       </div>
-    </section>
+    </div>
   )
 }
