@@ -54,14 +54,6 @@ export function IconEyeOff({ size = 15, strokeWidth = 1.8, className }: IconProp
   )
 }
 
-export function IconClose({ size = 14, strokeWidth = 2, className }: IconProps) {
-  return (
-    <svg {...base(size, strokeWidth)} className={className}>
-      <path d="M6 6l12 12M18 6 6 18" />
-    </svg>
-  )
-}
-
 export function IconCheck({ size = 14, strokeWidth = 2.6, className }: IconProps) {
   return (
     <svg {...base(size, strokeWidth)} className={className}>

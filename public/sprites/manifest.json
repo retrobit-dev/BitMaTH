@@ -1,0 +1,42 @@
+{
+  "character": "guru-pdh",
+  "description": "Guru matematika berpakaian PDH. Gaya pixel-art isometrik, outline 1px, tanpa anti-alias.",
+  "pixelScale": 3,
+  "images": {
+    "idle": {
+      "src": "/sprites/guru-pdh.png",
+      "size": [240, 750],
+      "usage": "pose dasar / berdiri"
+    },
+    "sit": {
+      "src": "/sprites/guru-duduk.png",
+      "size": [364, 628],
+      "usage": "duduk di kursi, buku di pangkuan"
+    },
+    "point": {
+      "src": "/sprites/guru-menunjuk.png",
+      "size": [429, 693],
+      "usage": "menunjuk papan tulis (kapur di tangan)"
+    },
+    "rule": {
+      "src": "/sprites/guru-penggaris.png",
+      "size": [429, 693],
+      "usage": "memegang penggaris panjang"
+    }
+  },
+  "sheets": {
+    "core": {
+      "src": "/sprites/guru-sheet.png",
+      "cell": [240, 780],
+      "columns": ["idle-a", "idle-b"],
+      "rows": ["down", "left", "right"],
+      "fps": 4,
+      "note": "Arah 'back' belum tersedia; menunggu sprite belakang."
+    }
+  },
+  "notes": [
+    "Semua gambar sudah dipangkas dan berlatar transparan.",
+    "Pakai image-rendering: pixelated dan skala kelipatan bulat.",
+    "Dibangun ulang lewat scripts/build-sprites.sh dari guru-pdh.png."
+  ]
+}
